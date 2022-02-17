@@ -13,4 +13,9 @@ class User < ActiveRecord::Base
     self.favorites.find_or_create_by(memo_id: memo.id)
   end
 
+  def unfavorite(memo)
+    favorite = self.favorites.find_by(memo_id: memo.id)
+    favorite.destroy if favorite
+  end
+
 end

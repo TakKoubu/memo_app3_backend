@@ -1,7 +1,11 @@
 module Api
   class MemosController < ApplicationController
     def index
-      render json: Memo.all
+      memos = Memo.all.map do |memo|
+        memo.favorite_count = memo.favorites.count
+        memo
+      end
+      render json: memos.to_json(methods: [:favorite_count])
     end
 
     def create
